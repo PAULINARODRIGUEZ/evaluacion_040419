@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        *{ margin:0; padding:0;}
+        body {height:100%; width:100%; overflow:hidden;}
+        #menu { top: 1rem; right: 1rem; position: fixed; z-index:9999; }
+    </style>
+    <title>Ejercicios de p5.js</title>
+</head>
+<body>
+    <!-- este será el munú -->
+    <select id="menu" onchange="location=this.value;">
+        <option value="index.html">index.html</option>
+        <option value="sketch-1.html" selected>sketch-1.html</option>
+        <option value="sketch-2.html">sketch-2.html</option>
+        <option value="sketch-3.html">sketch-3.html</option>
+        <option value="sketch-4.html">sketch-4.html</option>
+        <option value="sketch-5.html">sketch-5.html</option>
+        <option value="sketch-6.html">sketch-6.html</option>
+    </select>
+    <!-- este div recibirá al canvas-->
+    <div id="aqui"></div>
+    <!-- vamos a buscar la biblioteca -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+    <script>
+        //Ahora podemos usar la biblioteca que fuimos a buscar
+        //Dibujo resultado de repetición (patrón)
+        function setup() {
+            createCanvas(windowWidth,windowHeight).parent("aqui");
+            
+        }
+
+        function draw() {
+            background(225);
+            fill (245,187,43);
+            stroke(255);
+            
+        	var a = windowWidth/100;
+        	for (var x = 0; x < windowWidth; x = x + 50){
+        		for (var y = 0; y < windowHeight; y = y + 50){
+            push();
+            translate(x, y);
+            rotate(frameCount / -50.0);
+            polygon(0, 0, 40, 5);
+            pop();
+                    
+                }
+        	}
+        }
+       
+        function polygon(x, y, radius, npoints) {
+  let angle = TWO_PI / npoints;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius;
+    let sy = y + sin(a) * radius;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
+        function windowResized(){
+            resizeCanvas(windowWidth, windowHeight);
+        }
+    </script>
+</body>
+</html>
