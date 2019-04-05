@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        *{ margin:0; padding:0;}
+        body {height:100%; width:100%; overflow:hidden;}
+        #menu { top: 1rem; right: 1rem; position: fixed; z-index:9999; }
+    </style>
+    <title>Ejercicios de p5.js</title>
+</head>
+<body>
+    <!-- este será el munú -->
+    <select id="menu" onchange="location=this.value;">
+        <option value="index.html">index.html</option>
+        <option value="sketch-1.html">sketch-1.html</option>
+        <option value="sketch-2.html">sketch-2.html</option>
+        <option value="sketch-3.html">sketch-3.html</option>
+        <option value="sketch-4.html">sketch-4.html</option>
+        <option value="sketch-5.html">sketch-5.html</option>
+        <option value="sketch-6.html" selected>sketch-6.html</option>
+    </select>
+    <!-- este div recibirá al canvas-->
+    <div id="aqui"></div>
+    <button id="submit">submit</button>
+    <select class="custom-select" id="city">
+        <option selected>Escoge una ciudad</option>
+    <!-- vamos a buscar la biblioteca -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>   
+    <script>        
+        //Ahora podemos usar la biblioteca que fuimos a buscar
+        //Dibujo resultado de consulta a API
+        var weather;
+        var api = 'https://api.openweathermap.org/data/2.5/weather?q';
+        var apikey = '&APPID=aaa8f92473f6c41ebaf6059f4933727d';
+        var units = '&units=metric';
+function setup() {
+   createdcanvas (400,400)
+    var button = select('#submit');
+    button.mousePressed(estaCiudad);
+   input = select('#city');
+	
+}	
+    	function estaCiudad() {
+             var url = api + input.value() + apikey + units;
+    loadJSON(url, gotData);
+        }
+	
+function gotData(data) {
+	weather = (data);
+	var canvas = createCanvas(windowWidth, windowHeight);
+    canvas.position(0,0);
+	canvas.style('z-index','-1');
+	fill(155);
+	background(255)
+	textAlign(LEFT);
+	textSize(72);
+	text(Math.round(data.main.temp) + 'º C', 50, height-50);
+	textAlign(RIGHT);
+	textSize(24);
+	text(data.name + ', ' + data.sys.country, width-80, height-80);
+	textSize(16);
+	text('Viento: ' + data.wind.speed + ' km/hr, ' + data.wind.deg + 'º', width-80, height-50);
+}
+        function draw(){
+            backgraund(0)
+            if (wheater){
+                var temp= weather.main.temp;
+                var humidity= weather.main.humidity;
+                ellipse(100,100,temp,temp )
+                ellipse(300,100,humidity,humidity)
+            }
+        }
+        
+        function windowResized(){
+            resizeCanvas(windowWidth, windowHeight);
+        }
+    </script>
+</body>
+</html>
